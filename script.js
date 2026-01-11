@@ -167,16 +167,9 @@ async function sendCommand(action) {
 
 
     const encoder = new TextEncoder();
-    const data = encoder.encode(dataString);
 
     try {
-        // Android/WebBluetooth often prefers WriteWithoutResponse for UART services
-        // to avoid "GATT Error" or "NotSupportedError"
-        if (txCharacteristic.properties.writeWithoutResponse) {
-            await txCharacteristic.writeValueWithoutResponse(data);
-        } else {
-            await txCharacteristic.writeValue(data);
-        }
+        await txCharacteristic.writeValue(encoder.encode(dataString));
         logToConsole('Sent: ' + dataString.trim());
     } catch (error) {
         logToConsole('Send Error: ' + error);
