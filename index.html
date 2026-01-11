@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Superbit Robot Controller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="controller-container">
+        <header>
+            <h1>Superbit Controller</h1>
+            <button id="btn-connect" class="btn-connect">🔌 Connect Bluetooth</button>
+            <div id="connection-status" class="status disconnected">Disconnected</div>
+        </header>
+
+        <main>
+            <div class="d-pad-container">
+                <div class="d-pad">
+                    <button class="btn-dir up" id="btn-up" data-command="forward">▲</button>
+                    <button class="btn-dir left" id="btn-left" data-command="left">◀</button>
+                    <button class="btn-dir right" id="btn-right" data-command="right">▶</button>
+                    <button class="btn-dir down" id="btn-down" data-command="backward">▼</button>
+                    <div class="center"></div>
+                </div>
+            </div>
+
+            <div class="actions-container">
+                <button class="btn-action kick" id="btn-kick" data-command="kick">KICK</button>
+                <button class="btn-action stop" id="btn-stop" data-command="stop">STOP</button>
+            </div>
+
+            <div class="debug-console">
+                <h3>Debug Log</h3>
+                <pre id="console-output">Waiting for connection...</pre>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
