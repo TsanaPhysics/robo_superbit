@@ -71,12 +71,20 @@ async function connectBluetooth() {
         logToConsole('Getting TX Characteristic...');
         txCharacteristic = await service.getCharacteristic(UART_TX_CHARACTERISTIC_UUID);
 
-        logToConsole('Getting RX Characteristic...');
-        rxCharacteristic = await service.getCharacteristic(UART_RX_CHARACTERISTIC_UUID);
+        // OPTIONAL: Get RX Characteristic (for receiving data from Robot)
+        // We wrap this in a try-catch so that if it fails (common on some Androids),
+        // we can STILL connect and drive the robot (sending commands works via TX).
+        try {
+            logToConsole('Getting RX Characteristic (Optional)...');
+            rxCharacteristic = await service.getCharacteristic(UART_RX_CHARACTERISTIC_UUID);
 
-        logToConsole('Starting Notifications...');
-        await rxCharacteristic.startNotifications();
-        rxCharacteristic.addEventListener('characteristicvaluechanged', handleNotifications);
+            logToConsole('Starting Notifications...');
+            await rxCharacteristic.startNotifications();
+            rxCharacteristic.addEventListener('characteristicvaluechanged', handleNotifications);
+        } catch (rxError) {
+            logToConsole('⚠️ Could not setup data receiving: ' + rxError);
+            logToConsole('👉 You can still drive! (Just cannot receive data)');
+        }
 
         logToConsole('Connected!');
         updateStatus(true);
